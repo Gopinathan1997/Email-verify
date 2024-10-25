@@ -6,9 +6,9 @@ export async function POST(req) {
   console.log("yes");
   const data = await req.json();
   const { token } = data;
-
+console.log('--',token)
   if (!token) {
-    return new Response(JSON.stringify({ error: "No token provided" }), {
+    return new Response(JSON.stringify({ message: "No token provided" }), {
       status: 400,
     });
   }
@@ -17,14 +17,14 @@ export async function POST(req) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log(decoded);
 
-    if (!decoded.insertId) {
-      return new Response(JSON.stringify({ error: "Invalid token" }), {
+    if (!decoded.id) {
+      return new Response(JSON.stringify({ message: "Invalid token" }), {
         status: 400,
       });
     }
 
     const query = "UPDATE users SET is_verified = 1 WHERE id = ?";
-    const [result] = await (await db).execute(query, [decoded.insertId]);
+    const [result] = await (await db).execute(query, [decoded.id]);
     console.log(result);
 
     if (result.affectedRows === 0) {
@@ -42,11 +42,11 @@ export async function POST(req) {
     console.error("Error during verification:", error);
     if (error.name === "TokenExpiredError") {
       return new Response(
-        JSON.stringify({ error: "Verification link expired" }),
+        JSON.stringify({ message: "Verification link expired" }),
         { status: 400 }
       );
     }
-    return new Response(JSON.stringify({ error: "Invalid or expired token" }), {
+    return new Response(JSON.stringify({ message: "Invalid or expired token" }), {
       status: 400,
     });
   }
