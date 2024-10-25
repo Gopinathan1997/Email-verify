@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Contact Management System API
 
-## Getting Started
+This is a Contact Management System API built with Next.js and MySQL, featuring user authentication, data validation, and secure data handling. The API includes CRUD operations for managing contacts and provides advanced functionality such as file handling and time zone conversions.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+1. **User Authentication**
+   - JWT-based user registration and login.
+   - Email verification upon registration.
+   - Password reset functionality via one-time code.
+
+2. **Data Validation**
+   - Validates user inputs (e.g., registration and contact details) using `yup`.
+   - Enforces unique email constraints in both `users` and `contacts` tables.
+
+3. **Database Setup**
+   - MySQL database with a normalized schema.
+   - Separate tables for `users` and `contacts`, with relationships as needed.
+   - `is_verified` column implemented as a `TINYINT` in the `users` table with a default value of `0`.
+
+4. **Security**
+   - Password hashing using a secure hashing algorithm.
+   - Rate limiting on sensitive endpoints (e.g., login and registration) to prevent abuse.
+   - Proper error handling for expired or invalid JWT tokens.
+
+## Requirements Checklist
+
+- [x] **User Authentication**
+  - Implemented user registration, login, email verification, and password reset.
+- [x] **Data Validation**
+  - All endpoints validate inputs with `yup` to ensure data integrity.
+- [x] **Database Setup**
+  - MySQL database set up with normalized schema, migrations, and relationships.
+- [x] **Security**
+  - Password hashing and rate limiting in place for secure and scalable usage.
+- [ ] **Contact Management**
+  - Create, update, retrieve, and delete contact endpoints (in progress).
+- [ ] **Date-Time Handling**
+  - Store timestamps in UTC and convert them to user-specified time zones.
+- [ ] **File Handling**
+  - Bulk contact creation and updates via CSV/Excel upload.
+  - Download all contacts as CSV/Excel with creation dates and time zones.
+- [ ] **Deployment**
+  - Deploy API on a platform like Heroku, Vercel, or Render.
+
+## Challenges
+
+1. **Email Verification Not Updating in Database**  
+   A major challenge I encountered was getting the `is_verified` field to update correctly in the database upon email verification. While I set up the email verification flow with JWT, ensuring the token decoded correctly and then updating the database was unexpectedly complex. Debugging involved tracing the asynchronous API calls, adjusting the SQL update query, and carefully testing each step of the JWT verification.
+
+2. **Learning Next.js from Scratch**  
+   Since Next.js was new to me, I had to learn its unique structure and conventions. Understanding Next.js API routes, data fetching methods, and server-side versus client-side handling was initially confusing. However, working through the documentation and applying concepts directly in this project helped me develop a solid foundation.
+
+
+## Installation
+   **Clone the repository:**
+
+```
+    git clone <repository-url>
+    cd <repository-folder>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Install dependencies:**
+```
+    npm install
+```
 
-## Learn More
+Set up MySQL database and update .env.local file with your database credentials.
 
-To learn more about Next.js, take a look at the following resources:
+**Run database migrations (if applicable):**
+```
+    npm run migrate
+```
+**Start the development server**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+    npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
