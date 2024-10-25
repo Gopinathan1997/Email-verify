@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
-import {db} from './lib/db'
+//import { useEffect, useState } from "react";
+//import {db} from './lib/db'
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  const storedResponse = localStorage.getItem("verificationResponse");
-  const data = storedResponse ? JSON.parse(storedResponse) : null;
+  //const storedResponse = localStorage.getItem("verificationResponse");
+  //const data = storedResponse ? JSON.parse(storedResponse) : null;
 
   if (!localStorage.getItem("verificationResponse")) {
     return router.push("/register");
