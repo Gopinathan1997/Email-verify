@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { db } from "../../lib/db";
-import { NextResponse } from "next/server";
 
 export async function POST(req) {
   console.log("yes");
