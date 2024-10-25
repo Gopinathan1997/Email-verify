@@ -48,6 +48,7 @@ export default function Register() {
         setMessage(data.message);
       }
     } catch (error) {
+      console.log(error)
       setMessage("An error occurred. Please try again.");
     }
   };
